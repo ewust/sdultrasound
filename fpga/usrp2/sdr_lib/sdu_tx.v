@@ -21,7 +21,7 @@ reg [15:0] ram_wr_idx, ram_rd_idx;
 assign dac_out = ram_rd_data;
 
 //Inferred RAM block
-inferred_ram #(16,16) ir1(
+ram #(16,16) ir1(
 	.clk(clk),
 	.rd_addr(ram_rd_idx),
 	.rd_data(ram_rd_data),

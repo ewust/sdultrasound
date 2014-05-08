@@ -165,6 +165,7 @@ module u2_core
    localparam SR_RX_DSP1  =  96;   // 7
 
    localparam SR_TX_FRONT = 128;   // ?
+   localparam SR_SDU_CTRL = 134;
    localparam SR_TX_CTRL  = 144;   // 6
    localparam SR_TX_DSP   = 160;   // 5
 
@@ -609,6 +610,41 @@ module u2_core
       .adr_i(sa_adr[4:2]),.dat_i(sa_dat_o),.dat_o(sa_dat_i),
       .rx_int_o(uart_rx_int),.tx_int_o(uart_tx_int),
       .tx_o(uart_tx_o),.rx_i(uart_rx_i),.baud_o(uart_baud_o));
+
+   wire sdu_tx_en, sdu_rx_en;
+   wire sdu_seq_done_strobe, sdu_ave_done_strobe;
+   wire [15:0] sdu_tx_data;
+   wire [31:0] sdu_rx_data;
+   wire sdu_tx_strobe, sdu_rx_strobe;
+   sdu_controller #(SR_SDU_CTRL) sduc (
+      .clk(dsp_clk),
+      .reset(dsp_rst),
+      .set_stb(set_stb_dsp),
+      .set_addr(set_addr_dsp),
+      .set_data(set_data_dsp),
+      .sdu_tx_en(sdu_tx_en),
+      .sdu_rx_en(sdu_rx_en),
+      .sdu_seq_done_strobe(sdu_seq_done_strobe),
+      .sdu_ave_done_strobe(sdu_ave_done_strobe));
+
+   sdu_rx sdur(
+      .clk(dsp_clk),
+      .reset(dsp_rst),
+      .sdu_rx_en(sdu_rx_en),
+      .sdu_seq_done_strobe(sdu_seq_done_strobe),
+      .sdu_ave_done_strobe(sdu_ave_done_strobe),
+      .sdu_rx_data(sdu_rx_data),
+      .sdu_rx_strobe(),
+      .adc_in({adc_a,2'b00}));
+
+   sdu_tx sdut(
+      .clk(dsp_clk),
+      .reset(dsp_rst),
+      .sdu_tx_en(sdu_tx_en),
+      .sdu_seq_done_strobe(sdu_seq_done_strobe),
+      .sdu_tx_data(sdu_tx_data),
+      .sdu_tx_strobe(),
+      .dac_out(dac_a));
 
    // /////////////////////////////////////////////////////////////////////////
    // ADC Frontend

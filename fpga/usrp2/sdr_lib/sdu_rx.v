@@ -34,7 +34,7 @@ wire [31:0] adc_in_sign_ext = {{16}{adc_in[15]},adc_in};
 wire [31:0] ram_wr_data = (first_time) ? adc_in_sign_ext : ram_rd_data + adc_in_sign_ext;
 
 //Inferred RAM block
-inferred_ram #(32,16) ir1(
+ram #(32,16) ir1(
 	.clk(clk),
 	.rd_addr(ram_rd_idx),
 	.rd_data(ram_rd_data),
