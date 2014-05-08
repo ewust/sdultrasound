@@ -634,7 +634,7 @@ module u2_core
       .sdu_seq_done_strobe(sdu_seq_done_strobe),
       .sdu_ave_done_strobe(sdu_ave_done_strobe),
       .sdu_rx_data(sdu_rx_data),
-      .sdu_rx_strobe(),
+      .sdu_rx_strobe(sdu_rx_strobe),
       .adc_in({adc_a,2'b00}));
 
    sdu_tx sdut(
@@ -643,8 +643,13 @@ module u2_core
       .sdu_tx_en(sdu_tx_en),
       .sdu_seq_done_strobe(sdu_seq_done_strobe),
       .sdu_tx_data(sdu_tx_data),
-      .sdu_tx_strobe(),
+      .sdu_tx_strobe(sdu_tx_strobe),
       .dac_out(dac_a));
+
+   assign strobe_rx0 = sdu_rx_strobe;
+   assign sdu_tx_strobe = run_tx;
+   assign sdu_tx_data = sample_tx[15:0];
+   assign sample_rx0 = sdu_rx_data;
 
    // /////////////////////////////////////////////////////////////////////////
    // ADC Frontend
@@ -670,7 +675,7 @@ module u2_core
       .set_stb(set_stb_dsp),.set_addr(set_addr_dsp),.set_data(set_data_dsp),
       .set_stb_user(set_stb_user), .set_addr_user(set_addr_user), .set_data_user(set_data_user),
       .rx_fe_i(rx_fe_i),.rx_fe_q(rx_fe_q),
-      .sample(sample_rx0), .run(run_rx0_d1), .strobe(strobe_rx0),
+      .sample(/*sample_rx0*/), .run(run_rx0_d1), .strobe(/*strobe_rx0*/),
       .debug() );
 
    vita_rx_chain #(.BASE(SR_RX_CTRL0),.UNIT(0),.FIFOSIZE(DSP_RX_FIFOSIZE), .DSP_NUMBER(0)) vita_rx_chain0
@@ -762,14 +767,14 @@ module u2_core
       .set_stb(set_stb_dsp),.set_addr(set_addr_dsp),.set_data(set_data_dsp),
       .set_stb_user(set_stb_user), .set_addr_user(set_addr_user), .set_data_user(set_data_user),
       .tx_fe_i(tx_fe_i),.tx_fe_q(tx_fe_q),
-      .sample(sample_tx), .run(run_tx), .strobe(strobe_tx),
+      .sample(sample_tx), .run(run_tx), .strobe(/*strobe_tx*/),
       .debug() );
 
    tx_frontend #(.BASE(SR_TX_FRONT)) tx_frontend
      (.clk(dsp_clk), .rst(dsp_rst),
       .set_stb(set_stb_dsp),.set_addr(set_addr_dsp),.set_data(set_data_dsp),
       .tx_i(tx_fe_i), .tx_q(tx_fe_q), .run(1'b1),
-      .dac_a(dac_a), .dac_b(dac_b));
+      .dac_a(/*dac_a*/), .dac_b(dac_b));
 
    // ///////////////////////////////////////////////////////////////////////////////////
    // SERDES
