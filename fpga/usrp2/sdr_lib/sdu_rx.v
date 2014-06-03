@@ -24,13 +24,14 @@ parameter STATE_RECORD_PLAYBACK = 4;
 //FSM logic
 reg [3:0] state, next_state;
 reg ram_wr_idx_reset, ram_rd_idx_reset;
+reg ram_rd_idx_incr;
 reg ram_wren;
 reg first_time, reset_first_time;
 reg [31:0] ram_wr_idx, ram_rd_idx;
 
 wire [31:0] ram_rd_data;
 assign sdu_rx_data = ram_rd_data;
-wire [31:0] adc_in_sign_ext = {{16}{adc_in[15]},adc_in};
+wire [31:0] adc_in_sign_ext = {{{16}{adc_in[15]}},adc_in};
 wire [31:0] ram_wr_data = (first_time) ? adc_in_sign_ext : ram_rd_data + adc_in_sign_ext;
 
 //Inferred RAM block
