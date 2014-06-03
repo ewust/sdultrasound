@@ -611,6 +611,10 @@ module u2_core
       .rx_int_o(uart_rx_int),.tx_int_o(uart_tx_int),
       .tx_o(uart_tx_o),.rx_i(uart_rx_i),.baud_o(uart_baud_o));
 
+   // Software-defined Ultrasound (SDU)
+   wire [31:0] 	 sample_rx0;
+   wire 	 strobe_rx0, clear_rx0;
+   wire [31:0]   sample_tx;
    wire sdu_tx_en, sdu_rx_en;
    wire sdu_seq_done_strobe, sdu_ave_done_strobe;
    wire [15:0] sdu_tx_data;
@@ -664,8 +668,6 @@ module u2_core
    
    // /////////////////////////////////////////////////////////////////////////
    // DSP RX 0
-   wire [31:0] 	 sample_rx0;
-   wire 	 strobe_rx0, clear_rx0;
 
    always @(posedge dsp_clk)
      run_rx0_d1 <= run_rx0;
@@ -744,7 +746,6 @@ module u2_core
 	.debug2(debug_extfifo2) );
 
    wire [23:0] 	 tx_fe_i, tx_fe_q;
-   wire [31:0]   sample_tx;
    wire strobe_tx;
    
    vita_tx_chain #(.BASE(SR_TX_CTRL), .FIFOSIZE(DSP_TX_FIFOSIZE),
