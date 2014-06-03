@@ -15,9 +15,9 @@ module sdu_controller #(parameter BASE=0)(
 );
 
 //SDUltrasound settings
-wire [31:0] sdu_tx_len,
-wire [31:0] sdu_seq_len,
-wire [31:0] sdu_num_ave
+wire [31:0] sdu_tx_len;
+wire [31:0] sdu_seq_len;
+wire [31:0] sdu_num_ave;
 
 setting_reg #(.my_addr(BASE+0), .width(32)) sr_0
 (.clk(clk),.rst(reset),.strobe(set_stb),.addr(set_addr),
