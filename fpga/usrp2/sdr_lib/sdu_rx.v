@@ -4,8 +4,8 @@ module sdu_rx(
 
 	//SDUltrasound control signals
 	input reg sdu_rx_en,
-	output reg sdu_seq_done_strobe,
-	output reg sdu_ave_done_strobe,
+	input reg sdu_seq_done_strobe,
+	input reg sdu_ave_done_strobe,
 
 	//PC interface
 	output [31:0] sdu_rx_data,
