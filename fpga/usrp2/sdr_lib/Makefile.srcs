@@ -36,6 +36,9 @@ round_reg.v \
 round_sd.v \
 rx_dcoffset.v \
 rx_frontend.v \
+sdu_controller.v \
+sdu_rx.v \
+sdu_tx.v \
 sign_extend.v \
 small_hb_dec.v \
 small_hb_int.v \
