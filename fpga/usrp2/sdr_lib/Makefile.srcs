@@ -34,6 +34,7 @@ pipestage.v \
 round.v \
 round_reg.v \
 round_sd.v \
+ram.v \
 rx_dcoffset.v \
 rx_frontend.v \
 sdu_controller.v \
