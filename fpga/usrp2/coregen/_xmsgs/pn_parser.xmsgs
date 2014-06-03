@@ -5,13 +5,10 @@
 <!--     behavior or data corruption.  It is strongly advised that -->
 <!--     users do not edit the contents of this file.              -->
 <!--                                                               -->
-<!-- Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.    -->
+<!-- Copyright (c) 1995-2012 Xilinx, Inc.  All rights reserved.    -->
 
 <messages>
-<msg type="info" file="ProjectMgmt" num="1062" ><arg fmt="%s" index="1">Parsing Verilog file &quot;/home/jblum/src/ettus/fpga_b200/usrp2/coregen/pll_100_40_75.v&quot; into library work</arg>
-</msg>
-
-<msg type="info" file="ProjectMgmt" num="1062" ><arg fmt="%s" index="1">Parsing Verilog file &quot;/home/jblum/src/ettus/fpga_b200/usrp2/coregen/pll_100_40_75/example_design/pll_100_40_75_exdes.v&quot; into library work</arg>
+<msg type="info" file="ProjectMgmt" num="1845" ><arg fmt="%s" index="1">Analyzing Verilog file &quot;/home/ewust/research/sdultrasound/fpga/usrp2/coregen/fifo_xlnx_512x36_2clk_prog_full.v&quot; into library work</arg>
 </msg>
 
 </messages>
