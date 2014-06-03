@@ -3,7 +3,7 @@ module sdu_rx(
 	input reset,
 
 	//SDUltrasound control signals
-	output reg sdu_rx_en,
+	input reg sdu_rx_en,
 	output reg sdu_seq_done_strobe,
 	output reg sdu_ave_done_strobe,
 
