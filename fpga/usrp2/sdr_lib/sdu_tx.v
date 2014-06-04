@@ -4,8 +4,8 @@ module sdu_tx(
 	input reset,
 
 	//SDUltrasound control signals
-	input reg sdu_tx_en,
-	input reg sdu_seq_done_strobe,
+	input sdu_tx_en,
+	input sdu_seq_done_strobe,
 
 	//PC interface
 	input [15:0] sdu_tx_data,
