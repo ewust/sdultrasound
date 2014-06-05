@@ -1,32 +1,30 @@
 
-module ram(clk,reset,wr_data,wr_addr,wr_en,rd_data,rd_addr);
+module ram (clk, en, we, addr, di, do);
+
 //User-defined parameters
 parameter DATA_WIDTH = 8;
 parameter DEPTH_LOG2 = 4;
 parameter DEPTH = (1 << DEPTH_LOG2);
 
-//Ports
 input clk;
-input reset;
-input [DATA_WIDTH-1:0] wr_data;
-input [DEPTH_LOG2-1:0] wr_addr;
-input wr_en;
-output [DATA_WIDTH-1:0] rd_data;
-input [DEPTH_LOG2-1:0] rd_addr;
+input we;
+input en;
+input [DEPTH_LOG2-1:0] addr;
+input [DATA_WIDTH-1:0] di;
+output [DATA_WIDTH-1:0] do;
 
 //Locals
-reg [DATA_WIDTH-1:0] ram [DEPTH-1:0];
-assign rd_data = ram[rd_addr];
+reg [DATA_WIDTH-1:0] RAM [DEPTH-1:0];
+reg [DATA_WIDTH-1:0] do;
 
-always @(posedge clk) begin
-	if(reset) begin
-		//Not sure if there's really anything to do in the reset state...
-	end else begin
-		if(wr_en) begin
-			ram[wr_addr] <= #1 wr_data;
-		end
-		//rd_data <= `SD ram[rd_addr];
-	end
+always @(posedge clk)
+begin
+    if (en)
+    begin
+        if (we)
+            RAM[addr]<=di;
+        do <= RAM[addr];
+    end
 end
 
 endmodule

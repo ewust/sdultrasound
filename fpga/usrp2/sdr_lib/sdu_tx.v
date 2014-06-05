@@ -20,14 +20,16 @@ wire [15:0] ram_wr_data = sdu_tx_data;
 reg [15:0] ram_wr_idx, ram_rd_idx;
 assign dac_out = ram_rd_data;
 
+wire [31:0] ram_addr = (sdu_tx_strobe) ? ram_wr_idx : ram_rd_idx;
+
 //Inferred RAM block
-ram #(16,16) ir1(
-	.clk(clk),
-	.rd_addr(ram_rd_idx),
-	.rd_data(ram_rd_data),
-	.wr_addr(ram_wr_idx),
-	.wr_data(sdu_tx_data),
-	.wr_en(sdu_tx_strobe)
+ram #(32,16) ir1(
+    .clk(clk),
+    .en(1'b1),
+    .we(sdu_tx_strobe),
+    .addr(ram_addr),
+    .do(ram_rd_data),
+    .di(sdu_tx_data)
 );
 
 always @(posedge clk) begin

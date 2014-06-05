@@ -33,8 +33,18 @@ wire [31:0] ram_rd_data;
 assign sdu_rx_data = ram_rd_data;
 wire [31:0] adc_in_sign_ext = {{{16}{adc_in[15]}},adc_in};
 wire [31:0] ram_wr_data = (first_time) ? adc_in_sign_ext : ram_rd_data + adc_in_sign_ext;
+wire [31:0] ram_addr = (ram_wren) ? ram_wr_idx : ram_rd_idx;
 
 //Inferred RAM block
+ram #(32,16) ir1(
+    .clk(clk),
+    .en(1'b1),
+    .we(ram_wren),
+    .addr(ram_addr),
+    .do(ram_rd_data),
+    .di(ram_wr_data)
+);
+/*
 ram #(32,16) ir1(
 	.clk(clk),
 	.rd_addr(ram_rd_idx),
@@ -43,6 +53,7 @@ ram #(32,16) ir1(
 	.wr_data(ram_wr_data),
 	.wr_en(ram_wren)
 );
+*/
 
 always @(posedge clk) begin
 	if(reset) begin
